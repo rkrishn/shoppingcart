@@ -1,7 +1,8 @@
 .header {
     padding: 10px;
-    text-align: right;
     background: aliceblue;
+    height: 30px;
+    font-size: 20px;
     a {
         display: inline-block;
         margin-right: 10px;
@@ -11,4 +12,12 @@
             margin-right: 5px;
         }
     }
+}
+.headerLeft {
+    float: left;
+    padding-left: 20px;
+}
+.headerRight {
+    float: right;
+    padding-right: 20px;
 }

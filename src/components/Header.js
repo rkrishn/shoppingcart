@@ -7,16 +7,19 @@ const Header = ({itemCount, isUserLoggedIn, logout}) => {
 
     return ( 
         <header className={styles.header}>
-            <Link to='/'>Store</Link>
-            {isUserLoggedIn ?
-                <span>
-                    <Link to='/cart'> <CartIcon/> Cart {itemCount} </Link>
-                    <Link to='/'> <Logout/>
-                    <span onClick={logout}>Logout</span> </Link>
-                </span>
-                 :
-                <Link to='/login'> <CartIcon/>Login</Link>
-            }
+            <span className={styles.headerLeft}>Ecart</span>
+            <span className={styles.headerRight}>
+                <Link to='/'>Store</Link>
+                {isUserLoggedIn ?
+                    <span>
+                        <Link to='/cart'> <CartIcon/> Cart {itemCount} </Link>
+                        <Link to='/'> <Logout/>
+                        <span onClick={logout}>Logout</span> </Link>
+                    </span>
+                    :
+                    <Link to='/login'> <CartIcon/>Login</Link>
+                }
+            </span>
         </header>
      );
 }
