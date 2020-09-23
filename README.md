@@ -6,6 +6,6 @@ In the project directory, you can run:
 
 ### `yarn start`
 
-### `uses database with json server
+### `uses Json served using json server`
 
 start the Json server with `json-server --watch products.json`
