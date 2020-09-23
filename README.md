@@ -15,3 +15,9 @@ start the Json server with `json-server --watch products.json`
 JSON Server should run on http://localhost:3000/
 
 React app should be running on http://localhost:3001/
+
+Screens
+
+![alt text](https://github.com/rkrishn/shoppingcart/blob/master/screenshots/1.PNG)
+
+![alt text](https://github.com/rkrishn/shoppingcart/blob/master/screenshots/2.PNG)
