@@ -6,6 +6,6 @@ In the project directory, you can run:
 
 ### `yarn start`
 
-### `uses Json served using json server`
+### `used json server for mocking Json`
 
 start the Json server with `json-server --watch products.json`
