@@ -1,10 +1,12 @@
 import React from 'react';
 import styles from './ProductsGrid.module.scss';
 import { formatNumber } from '../helpers/utility';
+import { addProduct, increase } from '../actions/productActions';
+import { useDispatch } from 'react-redux';
 
-const ProductItem = ({product, actions, cartItems}) => {
+const ProductItem = ({product, cartItems}) => {
 
-    const { addProduct, increase } = actions;
+    const dispatch = useDispatch();
 
     const isInCart = product => {
         return !!cartItems.find(item => item.id === product.id);
@@ -20,14 +22,14 @@ const ProductItem = ({product, actions, cartItems}) => {
                 {
                     isInCart(product) && 
                     <button 
-                    onClick={() => increase(product)}
+                    onClick={() => dispatch(increase(product))}
                     className="btn btn-outline-primary btn-sm">Add more</button>
                 }
 
                 {
                     !isInCart(product) && 
                     <button 
-                    onClick={() => addProduct(product)}
+                    onClick={() => dispatch(addProduct(product))}
                     className="btn btn-primary btn-sm">Add to cart</button>
                 }
                 

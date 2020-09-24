@@ -2,7 +2,7 @@ import React from 'react';
 import ProductItem from './ProductItem';
 import styles from './ProductsGrid.module.scss';
 
-const ProductsGrid = ({ products, actions, cartItems, searchItem }) => {
+const ProductsGrid = ({ products, cartItems, searchItem }) => {
 
     return ( 
         <div className={styles.container}>
@@ -20,7 +20,7 @@ const ProductsGrid = ({ products, actions, cartItems, searchItem }) => {
 
                 {
                     products.map(product => (
-                        <ProductItem key={product.id} product={product} actions={actions} cartItems={cartItems}/>
+                        <ProductItem key={product.id} product={product} cartItems={cartItems}/>
                     ))
                 }
 

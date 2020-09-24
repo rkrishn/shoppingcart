@@ -1,71 +1,54 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import ProductsGrid from './components/ProductsGrid';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as cartActions from './actions/productActions';
+import { useSelector } from 'react-redux';
+import { handleLogout } from './actions/productActions';
 import axios from 'axios';
 
-class App extends React.Component {
+const App =() => {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      persons: [],
-      searchString: ''
-    }
-    this.onSearchItem = this.onSearchItem.bind(this);
-  }
+  const [products, setProducts] = useState([]);
+  const [searchString, setSearchString] = useState('');
+  const [filteredItems, setFilteredItems] = useState([]);
 
-  onSearchItem(evt) {
-    const searchString = evt.target.value;
-    this.setState({searchString});
-  }
+  const { cartItems, isUserLoggedIn } = useSelector(state => ({
+    cartItems: state.CartReducer.cartItems,
+    isUserLoggedIn: state.CartReducer.isUserLoggedIn,
+  }));
 
-  componentDidMount() {
+  useEffect(() => {
     axios.get(`http://localhost:3000/Products`)
     .then(res => {
-      const persons = res.data;
-      this.setState({ persons });
-      console.log(persons)
+      setProducts(res.data);
     })
+  },[]);
+
+  const onSearchItem = (evt) => {
+    const searchString = evt.target.value;
+    setSearchString(searchString);
   }
 
-  render() {
-    const searchString = this.state.searchString;
-    let products = this.state.persons;
-    if(this.state.searchString.length > 0){
-      // We are searching. Filter the results.
-      products = products.filter(function(l){
+  useEffect(() => {
+    setFilteredItems([]);
+    if(searchString.length > 0) {
+      const filteredItems = products.filter(function(l){
           return l.name.toLowerCase().match( searchString );
       });
+      setFilteredItems(filteredItems);
     }
-    return (
-      <div className="App">
-        <Header itemCount={this.props.cartItems.length} isUserLoggedIn={this.props.isUserLoggedIn} logout={this.props.actions.handleLogout}/>
-          <ProductsGrid products={products} cartItems={this.props.cartItems} actions={this.props.actions} searchItem={this.onSearchItem}/>
-        <Footer />
-      </div>
-    );
-  }
+  },[searchString]);
+
+  return (
+    <div className="App">
+      <Header itemCount={cartItems.length} isUserLoggedIn={isUserLoggedIn} logout={handleLogout}/>
+        <ProductsGrid products={filteredItems.length>0 ? filteredItems: products} cartItems={cartItems} searchItem={onSearchItem}/>
+      <Footer />
+    </div>
+  )
 
 }
 
-function mapStateToProps(state, ownProps) {
-  return {
-    cartItems: state.CartReducer.cartItems,
-    isUserLoggedIn: state.CartReducer.isUserLoggedIn, // See: reducers/index.js
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(cartActions, dispatch)
-  };
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default App;
 
